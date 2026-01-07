@@ -46,6 +46,7 @@ sed -i 's/PREVENT_COMMIT_CONTENT_PATTERNS_2=""/PREVENT_COMMIT_CONTENT_PATTERNS_2
 ### 4. Start building the template
 1. Use `geet include` to add any fully generic files to the template repo (it should )
 ```bash
+geet include app/_layout.tsx
 geet include app/index.tsx
 geet include app/stats.tsx
 geet include components/StatItem.tsx
@@ -53,7 +54,6 @@ geet include theme/colors.ts
 geet include consts.ts
 geet include tsconfig.json
 geet include quickstart.sh
-geet include app/_layout.tsx -f # this demos how to force add a file
 ```
 
 2. "Accidentally" include a file containing one of our patterns ("soccer") to see it barf
@@ -71,28 +71,25 @@ geet include app/teams.tsx
 #>>> To fix: Remove the matched patterns or update template-config.env, semitracked-template-config.env, or untracked-template-config.env
 ```
 
-3. Make a generic `SportTeamCard.tsx` from `SoccerTeamCard.tsx` for your template to use
-```bash
-cp components/SoccerTeamCard.tsx components/SportTeamCard.tsx
-sed -i 's/Soccer/Sport/g' components/SportTeamCard.tsx
-sed -i 's/soccer/sport/g' components/SportTeamCard.tsx
-
-geet include components/SportTeamCard.tsx --discreet  # adding as --discreet will keep it untracked by `soccer` by adding to soccer's .git/info/exclude
-
-```
-
-4. Make a `app/teams.template.tsx` from `app/teams.tsx` for your template to use
+3. Make a `app/teams.template.tsx` from `app/teams.tsx` for your template to use
    This is **special**...
 - `app/teams.template.tsx` will enter the `sport` repo as `app/teams.tsx` but show up in your `soccer/` working directory as `app/teams.template.tsx`
 - `app/teams.template.tsx` will be ignored by the soccer repo
 
 ```bash
-cp app/teams.tsx app/teams.template.tsx
-sed -i 's/Soccer/Sport/g' app/teams.template.tsx
-sed -i 's/soccer/sport/g' app/teams.template.tsx
+sed 's/Soccer/Sport/g; s/soccer/sport/g' app/teams.tsx >  app/teams.template.tsx
 
 geet include app/teams.template.tsx
 ```
+
+4. Make a generic `SportTeamCard.tsx` from `SoccerTeamCard.tsx` for your template to use
+```bash
+sed 's/Soccer/Sport/g; s/soccer/sport/g' components/SportTeamCard.tsx >  components/SportTeamCard.template.tsx
+
+geet include components/SportTeamCard.tsx --discreet  # adding as --discreet will keep it untracked by `soccer` by adding to soccer's .git/info/exclude
+```
+
+
 
 5. Do the same for `app/sample-data`
 ```bash
@@ -153,6 +150,30 @@ EOF
 geet include example.template.env
 ```
 
+
+9. Check the template repo status
+- use `geet` custom commands...
+  - `geet tree` does `git ls-files` in a tree-like format
+  - `geet inspect app` shows an overview of the app/ folders files and statuses
+  - `geet inpect app/teams.tsx` shows a more in-depth analysis of that file
+  - `geet split [dst]` is a tool which can create a worktree of your template repo
+- ...or any git commands...
+  - `geet status`
+  - `geet ls-files`
+  - `geet cat-files -p :app/teams.tsx`
+
+10. Test using `geet session`
+
+`geet session` will create a temporary worktree of the template repo using `geet split` and run a command inside of it
+
+Therefore, you can run
+```bash
+geet session -- ./quickstart.sh
+# then open http://localhost:8081
+```
+
+
+
 9. Commit!
 ```bash
 geet commit -m "add sport template"
@@ -195,3 +216,4 @@ geet inspect app
 ```bash
 git commit -m "building a template"
 ```
+
