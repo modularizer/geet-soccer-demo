@@ -7,7 +7,7 @@ This is a very dumb stupid demo, used for explaining [geet](https://github.com/m
 ## 1. Setup your "App"
 1.1. Clone soccer repo and setup initial state
 ```bash
-git clone https://modularizer/geet-soccer-app.git soccer
+git clone https://github.com/modularizer/geet-soccer-app.git soccer
 cd soccer
 ```
 
