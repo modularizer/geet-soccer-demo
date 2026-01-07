@@ -12,4 +12,9 @@ web-build/
 .idea/
 .vscode/
 .claude/
-.env
+.env!.sport/
+!.sport/*
+.sport/dot-git
+**/dot-git/
+**/untracked-template-config.env
+*.template.*
