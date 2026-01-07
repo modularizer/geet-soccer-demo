@@ -1,1 +1,17 @@
-# Add your include stuff here, you can call `geet sync` to sync it to the .geetexclude if you wish, but it will also auto-sync on every geet command
+# Add your include stuff here, you can call `geet sync` to sync it to the .geetexclude if you wish, but it will also auto-sync on every geet commandapp/_layout.tsx
+app/_layout.tsx
+app/index.tsx
+app/stats.tsx
+components/StatItem.tsx
+theme/colors.ts
+consts.ts
+tsconfig.json
+app/teams.tsx
+components/SportTeamCard.tsx
+sample-data/sport-stats.ts
+sample-data/sport-teams.ts
+favicon.svg
+app.json
+package.json
+package-lock.json
+example.env

@@ -12,7 +12,8 @@ web-build/
 .idea/
 .vscode/
 .claude/
-.env!.sport/
+.env
+!.sport/
 !.sport/*
 .sport/dot-git
 **/dot-git/
